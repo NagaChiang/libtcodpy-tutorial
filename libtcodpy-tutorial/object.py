@@ -11,16 +11,16 @@ class Object:
 
     def move(self, dx, dy):
 
-        if config.map[self.x + dx][self.y + dy].is_blocked:
+        if config.map.is_blocked(self.x + dx, self.y + dy):
             return
 
         self.x += dx
         self.y += dy
 
-    def draw(self, target_console):
-        libtcod.console_set_default_foreground(target_console, self.color)
-        libtcod.console_put_char(target_console, self.x, self.y, self.char, libtcod.BKGND_NONE)
+    def draw(self):
+        libtcod.console_set_default_foreground(config.console, self.color)
+        libtcod.console_put_char(config.console, self.x, self.y, self.char, libtcod.BKGND_NONE)
 
-    def clear(self, target_console):
-        libtcod.console_put_char(target_console, self.x, self.y, ' ', libtcod.BKGND_NONE)
+    def clear(self):
+        libtcod.console_put_char(config.console, self.x, self.y, ' ', libtcod.BKGND_NONE)
 

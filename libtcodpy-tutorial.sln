@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tutorial_libtcod", "Tutorial_libtcod\Tutorial_libtcod.pyproj", "{3F835EF1-70A6-4AFD-8E41-57A7F838948D}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "libtcodpy-tutorial", "libtcodpy-tutorial\libtcodpy-tutorial.pyproj", "{1CFF7FE0-17CC-42E3-8F9C-16BA10EC3674}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,8 +11,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F835EF1-70A6-4AFD-8E41-57A7F838948D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F835EF1-70A6-4AFD-8E41-57A7F838948D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CFF7FE0-17CC-42E3-8F9C-16BA10EC3674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CFF7FE0-17CC-42E3-8F9C-16BA10EC3674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

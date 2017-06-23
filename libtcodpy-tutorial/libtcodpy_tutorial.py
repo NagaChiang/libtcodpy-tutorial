@@ -1,39 +1,19 @@
 import libtcodpy as libtcod
 import config
-from object import Object
-from tile import Tile
-
-def make_map():
- 
-    config.map = [[ Tile(False)
-            for y in range(config.MAP_HEIGHT) ]
-                for x in range(config.MAP_WIDTH) ]
- 
-    # Place two pillars to test the map
-    config.map[30][22].is_blocked = True
-    config.map[30][22].is_sight_blocked = True
-    config.map[50][22].is_blocked = True
-    config.map[50][22].is_sight_blocked = True
+from map import Rect
 
 def render_all():
 
-    for y in range(config.MAP_HEIGHT):
-        for x in range(config.MAP_WIDTH):
-            is_wall = config.map[x][y].is_blocked
-            if is_wall:
-                libtcod.console_set_char_background(config.console, x, y, config.color_dark_wall, libtcod.BKGND_SET)
-            else:
-                libtcod.console_set_char_background(config.console, x, y, config.color_dark_ground, libtcod.BKGND_SET)
-
-    for object in objects:
-            object.draw(config.console)
+    config.map.draw()
+    for object in config.objects:
+        object.draw()
 
     libtcod.console_blit(config.console, 0, 0, config.SCREEN_WIDTH, config.SCREEN_HEIGHT, 0, 0, 0)
 
 def clear_all():
 
-    for object in objects:
-            object.clear(config.console)
+    for object in config.objects:
+        object.clear()
 
 def handle_inputs():
     global player_x, player_y
@@ -65,19 +45,6 @@ def main():
     libtcod.console_set_custom_font('fonts/arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
     libtcod.console_init_root(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, 'python/libtcod tutorial', False)
     libtcod.sys_set_fps(config.LIMIT_FPS)
-
-    # map
-    make_map()
-
-    # Create object representing the player
-    config.player = Object(config.SCREEN_WIDTH / 2, config.SCREEN_HEIGHT / 2, '@', libtcod.white)
- 
-    # Create an NPC
-    npc = Object(config.SCREEN_WIDTH/2 - 5, config.SCREEN_HEIGHT/2, '@', libtcod.yellow)
- 
-    # The list of objects with those two
-    global objects
-    objects = [npc, config.player]
 
     while not libtcod.console_is_window_closed():
 
