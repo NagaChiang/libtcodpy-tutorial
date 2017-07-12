@@ -31,12 +31,16 @@ def handle_inputs():
     # Movement
     if libtcod.console_is_key_pressed(libtcod.KEY_UP):
         config.player.move(0, -1)
+        config.recompute_fov_flag = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_DOWN):
         config.player.move(0, 1)
+        config.recompute_fov_flag = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_LEFT):
         config.player.move(-1, 0)
+        config.recompute_fov_flag = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_RIGHT):
         config.player.move(1, 0)
+        config.recompute_fov_flag = True
 
     return False
 

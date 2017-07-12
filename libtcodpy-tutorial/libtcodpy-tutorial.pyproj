@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="rect.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="config.py" />
     <Compile Include="libtcodpy_tutorial.py" />
     <Compile Include="map.py">
