@@ -12,6 +12,7 @@ LIMIT_FPS = 20
 ROOM_SIZE_MIN = 6
 ROOM_SIZE_MAX = 10
 MAX_ROOMS = 30
+MAX_ROOM_MONSTERS = 3
 
 FOV_ALGO = 0
 FOV_LIGHT_WALLS = True
@@ -23,7 +24,7 @@ color_dark_ground = libtcod.Color(50, 50, 150)
 color_light_ground = libtcod.Color(200, 180, 50)
 
 console = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
-player = Object(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', libtcod.white)
+player = Object(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', 'player', libtcod.white, True)
 #npc = Object(SCREEN_WIDTH / 2 - 5, SCREEN_HEIGHT / 2, '@', libtcod.yellow)
 objects = [player]
 

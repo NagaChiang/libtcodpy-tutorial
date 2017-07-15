@@ -2,7 +2,7 @@ import libtcodpy as libtcod
 import config
 from tile import Tile
 from rect import Rect
-
+from object import Object
 
 class Map:
 
@@ -29,7 +29,16 @@ class Map:
 
     def is_blocked(self, x, y):
         
-        return self.tiles[x][y].is_blocked
+        # Check map
+        if self.tiles[x][y].is_blocked:
+            return True
+
+        # Check objects
+        for obj in config.objects:
+            if obj.blocks and obj.x == x and obj.y == y:
+                return True
+
+        return False
 
     def is_sight_blocked(self, x, y):
 
@@ -37,7 +46,18 @@ class Map:
 
     def draw(self):
         
-        self.recompute_fov()
+        self._recompute_fov()
+        self._draw_map()
+
+    def _recompute_fov(self):
+        
+        if config.recompute_fov_flag:
+            config.recompute_fov_flag = False
+            libtcod.map_compute_fov(self.fov_map, config.player.x, config.player.y,
+                                    config.TORCH_RADIUS, config.FOV_LIGHT_WALLS, config.FOV_ALGO)
+
+    def _draw_map(self):
+
         for y in range(self.height):
             for x in range(self.width):
                 visible = libtcod.map_is_in_fov(self.fov_map, x, y)
@@ -55,13 +75,6 @@ class Map:
                         libtcod.console_put_char_ex(config.console, x, y, '#', libtcod.white, config.color_light_wall)
                     else:
                         libtcod.console_put_char_ex(config.console, x, y, '.', libtcod.white, config.color_light_ground)
-
-    def recompute_fov(self):
-        
-        if config.recompute_fov_flag:
-            config.recompute_fov_flag = False
-            libtcod.map_compute_fov(self.fov_map, config.player.x, config.player.y,
-                                    config.TORCH_RADIUS, config.FOV_LIGHT_WALLS, config.FOV_ALGO)
     
     def _generate(self):
 
@@ -101,13 +114,40 @@ class Map:
 
             self.rooms.append(new_room)
 
-    def _create_room(self, rect):
+    def _create_room(self, room_rect):
         
         # Leave borders as walls
-        for y in range(rect.y1 + 1, rect.y2):
-            for x in range(rect.x1 + 1, rect.x2):
+        for y in range(room_rect.y1 + 1, room_rect.y2):
+            for x in range(room_rect.x1 + 1, room_rect.x2):
                 self.tiles[x][y].is_blocked = False
                 self.tiles[x][y].is_sight_blocked = False
+
+        self._populate_room(room_rect)
+
+    def _populate_room(self, room_rect):
+
+        num_monsters = libtcod.random_get_int(0, 0, config.MAX_ROOM_MONSTERS)
+        for i in range(num_monsters):
+
+            # Random position
+            pos = room_rect.get_random_position()
+            while self.is_blocked(*pos):
+                pos = room_rect.get_random_position()
+
+            monster = self._create_monster(*pos)
+            config.objects.append(monster)
+    
+    def _create_monster(self, x, y):
+
+        monster = None
+        if libtcod.random_get_int(0, 0, 100) < 80:  # 80% chance of getting an orc
+            # Orc
+            monster = Object(x, y, 'o', 'Orc', libtcod.desaturated_green, True)
+        else:
+            # Troll
+            monster = Object(x, y, 'T', 'Troll', libtcod.darker_green, True)
+
+        return monster
 
     def _create_horizontal_tunnel(self, x1, x2, y):
 

@@ -3,11 +3,14 @@ import config
 
 class Object:
     
-    def __init__(self, x, y, char, color):
+    def __init__(self, x, y, char, name, color, blocks):
+
         self.x = x
         self.y = y
         self.char = char
+        self.name = name
         self.color = color
+        self.blocks = blocks
 
     def move(self, dx, dy):
 
